@@ -1,0 +1,7 @@
+config/
+coverage/
+e2e/
+node_modules/
+src/
+spec/
+package.json

@@ -1,0 +1,7 @@
+---
+applications:
+- name: cidemo-frontend
+  buildpack: staticfile_buildpack
+  memory: 64M
+  target: dist
+  instances: 1
