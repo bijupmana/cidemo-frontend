@@ -36,5 +36,11 @@ pipeline {
                 sh 'npm run test:headless'
             }
         }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build:prod'
+            }
+        }
     }
 }
