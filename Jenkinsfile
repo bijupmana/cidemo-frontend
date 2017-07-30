@@ -30,5 +30,11 @@ pipeline {
                 sh 'npm run lint'
             }
         }
+
+        stage('Unit Tests') {
+            steps {
+                sh 'npm run test:headless'
+            }
+        }
     }
 }
