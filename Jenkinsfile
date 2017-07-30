@@ -82,6 +82,36 @@ pipeline {
                     }
                 }
             }
+
+            post {
+                success {
+                    script {
+                        sh 'rm -rf *.zip'
+                        String sha = sh(script: "git log -n 1 --pretty=format:'%h'", returnStdout: true)
+                        zip zipFile: "artifact-${sha}.zip",
+                            archive: true
+                    }
+                }
+            }
+        }
+
+        stage('Archive to Artifactory') {
+            steps {
+                script {
+                    def artifactoryUrl = "http://${env.LOCAL_IP}:8000/artifactory"
+                    def server = Artifactory.newServer url: artifactoryUrl, credentialsId: 'artifactory'
+                    def uploadSpec = """{
+                          "files": [
+                            {
+                              "pattern": "artifact-*.zip",
+                              "target": "snapshot-local/cidemo-frontend/"
+                            }
+                         ]
+                        }"""
+                    def buildInfo = server.upload(uploadSpec)
+                    server.publishBuildInfo(buildInfo)
+                }
+            }
         }
     }
 }
