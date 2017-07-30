@@ -13,6 +13,7 @@
     "lint": "tslint --config ./config/tslint.json 'src/**/*.ts'",
     "lint:fix": "tslint --config ./config/tslint.json 'src/**/*.ts' --fix",
     "e2e": "ng e2e",
+    "e2e:prod": "ng e2e --progress false --serve false --config ./config/protractor.prod.conf.js",
     "release": "standard-version"
   },
   "private": true,
