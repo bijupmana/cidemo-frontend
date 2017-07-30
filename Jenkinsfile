@@ -24,10 +24,6 @@ pipeline {
         string( name: 'CF_SPACE',
                 defaultValue: 'pcfdev-space',
                 description: 'Cloud Foundry Space')
-
-        string( name: 'SELENIUM_HUB_URL',
-                defaultValue: 'http://192.168.2.100:4444/wd/hub',
-                description: 'Selenium Hub Address')
     }
 
     tools {
@@ -81,8 +77,7 @@ pipeline {
                 script {
                     def appInfo = readYaml file: './manifest.yml'
                     def appName = appInfo.applications[0].name
-                    def appUrl = "https://${appName}.${params.CF_BASE_HOST}/"
-                    withEnv(["APP_BASE_URL=${appUrl}", "SELENIUM_HUB_URL=${params.SELENIUM_HUB_URL}"]) {
+                    withEnv(["APP_BASE_URL=https://${appName}.${params.CF_BASE_HOST}/"]) {
                         sh 'npm run e2e:prod'
                     }
                 }
