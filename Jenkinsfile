@@ -63,12 +63,13 @@ pipeline {
         }
 
         stage('Deploy') {
+            environment {
+                PCF = credentials('pcf')
+            }
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'pcf', usernameVariable: 'CF_USER', passwordVariable: 'CF_PASSWORD')]) {
-                        sh "cf login -a ${params.CF_API} -u $CF_USER -p $CF_PASSWORD -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
-                        sh 'cf push'
-                    }
+                    sh "cf login -a ${params.CF_API} -u $PCF_USR -p $PCF_PSW -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
+                    sh 'cf push'
                 }
             }
         }
