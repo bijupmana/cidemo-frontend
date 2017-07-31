@@ -82,15 +82,41 @@ pipeline {
                     }
                 }
             }
+        }
 
-            post {
-                success {
-                    script {
-                        sh 'rm -rf *.zip'
-                        String sha = sh(script: "git log -n 1 --pretty=format:'%h'", returnStdout: true)
-                        zip zipFile: "artifact-${sha}.zip",
-                            archive: true
-                    }
+        stage('Create Artifact') {
+            steps {
+                script {
+                    // Remove previous artifacts
+                    sh 'rm -rf *.zip'
+
+                    // Determine next semantic version
+                    String version = sh(script: "npm run version:next | tail -n 1", returnStdout: true).trim()
+                    String sha = sh(script: "git log -n 1 --pretty=format:'%h'", returnStdout: true)
+                    println version
+
+                    // Save build metadata
+                    String branch = env.BRANCH_NAME.replace('/','-')
+                    String buildData = """
+                    {
+                        "version": "${version}+${sha}",
+                        "type": "snapshot",
+                        "branch": "${branch}",
+                        "job": {
+                            "baseName": "${env.JOB_BASE_NAME}",
+                            "name": "${env.JOB_NAME}"
+                        },
+                        "build": {
+                            "number": "${env.BUILD_NUMBER}",
+                            "tag": "${env.BUILD_TAG}",
+                        }
+                    }"""
+                    touch file: 'artifact.json'
+                    writeFile file: 'artifact.json', text: buildData, encoding: 'utf-8'
+
+                    // Create zip artifact
+                    zip zipFile: "artifact-${branch}-${sha}.zip",
+                        archive: true
                 }
             }
         }
