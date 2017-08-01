@@ -117,8 +117,7 @@ pipeline {
                     writeFile file: 'artifact.json', text: buildData, encoding: 'utf-8'
 
                     // Create zip artifact
-                    zip zipFile: "artifact-${branch}-${sha}.zip",
-                        archive: true
+                    zip zipFile: "artifact-${branch}-${sha}.zip"
                 }
             }
         }
