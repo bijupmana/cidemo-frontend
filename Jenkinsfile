@@ -86,7 +86,7 @@ pipeline {
             }
         }
 
-        stage('Create Artifact') {
+        stage('Archive Build') {
             steps {
                 script {
                     createArtifact {
@@ -94,13 +94,7 @@ pipeline {
                         version = nextVersion()
                         sha = buildCommitSha()
                     }
-                }
-            }
-        }
 
-        stage('Archive to Artifactory') {
-            steps {
-                script {
                     uploadToArtifactory {
                         pattern = 'artifact-*.zip'
                         target = 'snapshot-local/cidemo-frontend/'
