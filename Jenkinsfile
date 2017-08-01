@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+@Library('demo-pipeline-library') _
+
 pipeline {
     agent any
 
@@ -67,10 +69,8 @@ pipeline {
                 PCF = credentials('pcf')
             }
             steps {
-                script {
-                    sh "cf login -a ${params.CF_API} -u $PCF_USR -p $PCF_PSW -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
-                    sh 'cf push'
-                }
+                sh "cf login -a ${params.CF_API} -u $PCF_USR -p $PCF_PSW -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
+                sh 'cf push'
             }
         }
 
@@ -89,35 +89,11 @@ pipeline {
         stage('Create Artifact') {
             steps {
                 script {
-                    // Remove previous artifacts
-                    sh 'rm -rf *.zip'
-
-                    // Determine next semantic version
-                    String version = sh(script: "npm run version:next | tail -n 1", returnStdout: true).trim()
-                    String sha = sh(script: "git log -n 1 --pretty=format:'%h'", returnStdout: true)
-                    println version
-
-                    // Save build metadata
-                    String branch = env.BRANCH_NAME.replace('/','-')
-                    String buildData = """
-                    {
-                        "version": "${version}+${sha}",
-                        "type": "snapshot",
-                        "branch": "${branch}",
-                        "job": {
-                            "baseName": "${env.JOB_BASE_NAME}",
-                            "name": "${env.JOB_NAME}"
-                        },
-                        "build": {
-                            "number": "${env.BUILD_NUMBER}",
-                            "tag": "${env.BUILD_TAG}",
-                        }
-                    }"""
-                    touch file: 'artifact.json'
-                    writeFile file: 'artifact.json', text: buildData, encoding: 'utf-8'
-
-                    // Create zip artifact
-                    zip zipFile: "artifact-${branch}-${sha}.zip"
+                    createArtifact {
+                        prefix = 'artifact-'
+                        version = nextVersion()
+                        sha = buildCommitSha()
+                    }
                 }
             }
         }
@@ -125,19 +101,14 @@ pipeline {
         stage('Archive to Artifactory') {
             steps {
                 script {
-                    def artifactoryUrl = "http://${env.LOCAL_IP}:8000/artifactory"
-                    def server = Artifactory.newServer url: artifactoryUrl, credentialsId: 'artifactory'
-                    def uploadSpec = """{
-                          "files": [
-                            {
-                              "pattern": "artifact-*.zip",
-                              "target": "snapshot-local/cidemo-frontend/"
-                            }
-                         ]
-                        }"""
-                    def buildInfo = server.upload(uploadSpec)
-                    server.publishBuildInfo(buildInfo)
+                    uploadToArtifactory {
+                        pattern = 'artifact-*.zip'
+                        target = 'snapshot-local/cidemo-frontend/'
+                    }
                 }
+
+                // clean up
+                sh 'rm -rf *.zip'
             }
         }
     }
