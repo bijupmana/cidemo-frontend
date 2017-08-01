@@ -64,24 +64,24 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy & Run E2E') {
             environment {
                 PCF = credentials('pcf')
             }
             steps {
                 sh "cf login -a ${params.CF_API} -u $PCF_USR -p $PCF_PSW -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
-                sh 'cf push'
-            }
-        }
 
-        stage('E2E Tests') {
-            steps {
                 script {
-                    def appInfo = readYaml file: './manifest.yml'
-                    def appName = appInfo.applications[0].name
-                    withEnv(["APP_BASE_URL=https://${appName}.${params.CF_BASE_HOST}/"]) {
-                        sh 'npm run e2e:prod'
-                    }
+                    def appName = isFeatureBranch()
+                                ? appNameFromManifest(append: env.BRANCH_NAME)
+                                : appNameFromManifest()
+
+                    sh "cf push ${appName}"
+
+                    build job: '/run-e2e-tests',
+                          wait: true,
+                          parameters: [string(name: 'APP_BASE_URL', value: "https://${appName}.${params.CF_BASE_HOST}/"),
+                                       string(name: 'BRANCH', value: env.BRANCH_NAME)]
                 }
             }
         }
@@ -106,9 +106,7 @@ pipeline {
                         target = 'snapshot-local/cidemo-frontend/'
                     }
                 }
-
-                // clean up
-                sh 'rm -rf *.zip'
+                cleanUpArtifacts()
             }
         }
     }
