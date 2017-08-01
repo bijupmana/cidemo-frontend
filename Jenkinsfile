@@ -78,10 +78,12 @@ pipeline {
 
                     sh "cf push ${appName}"
 
+                    sh 'printenv'
+
                     build job: '/run-e2e-tests',
                           wait: true,
                           parameters: [string(name: 'APP_BASE_URL', value: "https://${appName}.${params.CF_BASE_HOST}/"),
-                                       string(name: 'APP_REPO', value: env.GIT_URL),
+                                       string(name: 'APP_REPO', value: 'https://github.com/julie-ng/js-cidemo-frontend.git'),
                                        string(name: 'BRANCH', value: env.BRANCH_NAME)]
                 }
             }
