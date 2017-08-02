@@ -1,0 +1,18 @@
+<section class="demo-login">
+  <h1>Login</h1>
+  <form #loginForm="ngForm" name="loginForm" class="form js-login-form" method="post" (ngSubmit)="submit($event)" (keyup.enter)="submit($event)">
+    <label for="username">
+      <span>Username</span>
+      <input type="text" name="username" id="username" class="js-input-username" [(ngModel)]="username" required>
+    </label>
+
+    <label class="control-label" for="password">
+      <span>Password</span>
+      <input type="password" name="password" id="password" class="js-input-password" [(ngModel)]="password" required>
+    </label>
+
+    <div *ngIf="hasError" class="has-error js-error-message alert alert-danger">{{ error }}</div>
+
+    <button type="submit" [disabled]="!loginForm.form.valid" class="js-btn-login" (click)="submit($event)">Login</button>
+  </form>
+</section>
