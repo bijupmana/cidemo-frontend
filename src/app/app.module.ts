@@ -1,3 +1,4 @@
+import { NgRedux, NgReduxModule } from '@angular-redux/store'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
@@ -18,6 +19,7 @@ import { routes } from './routes'
   imports: [
     BrowserModule,
     FormsModule,
+    NgReduxModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
