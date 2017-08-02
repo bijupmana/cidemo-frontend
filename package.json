@@ -5,6 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "serve:proxied": "ng serve --proxy-config ./config/proxy.conf.json",
+    "serve:docker": "ng serve --host 0.0.0.0 --port 4200 --live-reload false --proxy-config ./config/proxy.conf.json",
     "build": "ng build",
     "build:prod": "ng build --aot --prod --progress false",
     "test": "ng test",
