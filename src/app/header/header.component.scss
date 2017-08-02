@@ -1,0 +1,15 @@
+@import "~variables.scss";
+
+header {
+  background: $brand-primary;
+  color: #fff;
+  text-align: center;
+}
+
+h1 {
+  margin: 0;
+  padding: .75em 0;
+  font-weight: normal;
+  font-size: 1.2rem;
+  line-height: 1.4em;
+}
