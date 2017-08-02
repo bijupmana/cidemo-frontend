@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms'
 
 import { LoginComponent } from './login.component'
 
+import { AuthenticationService } from './../services/authentication.service'
+
 describe('LoginComponent', () => {
   let component: LoginComponent
   let fixture: ComponentFixture<LoginComponent>
@@ -10,8 +12,8 @@ describe('LoginComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      imports: [ FormsModule ],
-      providers: [ ]
+      imports: [ FormsModule, HttpModule ],
+      providers: [ AuthenticationService ]
     })
     .compileComponents()
   }))
