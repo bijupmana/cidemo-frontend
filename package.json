@@ -14,6 +14,7 @@
     "lint:fix": "tslint --config ./config/tslint.json 'src/**/*.ts' --fix",
     "e2e": "ng e2e",
     "e2e:prod": "ng e2e --progress false --serve false --config ./config/protractor.prod.conf.js",
+    "preflight:check": "npm run test:headless && npm run lint && npm run e2e",
     "release": "standard-version",
     "version:next": "semver \"$(node --print \"require('./package.json').version\")\" -i minor"
   },
