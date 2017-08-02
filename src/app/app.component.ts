@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable'
 
 import { IAppState } from "./app.store"
 import { ISessionState } from './models/session.interface'
+import { SessionActions } from './actions/session.actions'
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,12 @@ export class AppComponent {
   @select(['session', 'loggedIn']) readonly loggedIn$: Observable<boolean>
   @select(['session', 'fullname']) readonly fullname$: Observable<string>
 
-  constructor( private ngRedux: NgRedux<IAppState> ) {
+  constructor( private ngRedux: NgRedux<IAppState>,
+               private actions: SessionActions ) {
+  }
+
+  logout(evt) {
+    evt.preventDefault()
+    this.ngRedux.dispatch(this.actions.logout())
   }
 }

@@ -14,7 +14,7 @@ export class AuthenticationService {
 
 
   constructor (private http: Http,
-              private ngRedux: NgRedux<IAppState>,
+               private ngRedux: NgRedux<IAppState>,
                private actions: SessionActions) {
   }
 
