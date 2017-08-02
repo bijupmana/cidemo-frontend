@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import 'rxjs/add/operator/startWith'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
-import 'rxjs/add/operator/startWith'
 
 @Component({
   selector: 'app-login',
@@ -14,13 +14,13 @@ export class LoginComponent implements OnInit {
   hasError = false
   error = ''
 
-  constructor() {
+  constructor () {
   }
 
   ngOnInit () {
   }
 
-  submit(evt) {
+  submit (evt) {
     evt.preventDefault()
   }
 }

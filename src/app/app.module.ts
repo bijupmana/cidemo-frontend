@@ -1,13 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { BrowserModule } from '@angular/platform-browser'
+import { RouterModule, Routes } from '@angular/router'
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
+import { AppComponent } from './app.component'
+import { HeaderComponent } from './header/header.component'
+import { LoginComponent } from './login/login.component'
 
-import { routes } from './routes';
+import { routes } from './routes'
 
 @NgModule({
   declarations: [
