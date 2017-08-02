@@ -8,11 +8,12 @@ import { ISessionState } from './models/session.interface'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   loggedIn: boolean
   title = 'MunichJS Demo'
+
   @select(['session', 'loggedIn']) readonly loggedIn$: Observable<boolean>
   @select(['session', 'fullname']) readonly fullname$: Observable<string>
 

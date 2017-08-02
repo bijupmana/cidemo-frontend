@@ -29,6 +29,19 @@ input[type="password"] {
   padding: 0.35em 0.25em;
 }
 
+button {
+  border: none;
+  background-color: #27ae60;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.5em;
+  padding: 0.25em 0.5em;
+}
+
+button:disabled {
+  opacity: 0.4;
+}
+
 .has-error {
   color: red;
 }
