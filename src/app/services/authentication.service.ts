@@ -1,13 +1,13 @@
+import { NgRedux, select } from '@angular-redux/store'
 import { Injectable } from '@angular/core'
 import { Http } from '@angular/http'
-import { Observable } from 'rxjs/Observable'
-import { NgRedux, select } from '@angular-redux/store'
-import 'rxjs/add/operator/map'
-import 'rxjs/add/operator/catch'
 import 'rxjs/add/observable/throw'
+import 'rxjs/add/operator/catch'
+import 'rxjs/add/operator/map'
+import { Observable } from 'rxjs/Observable'
 
-import { IAppState } from "./../app.store"
 import { SessionActions } from './../actions/session.actions'
+import { IAppState } from './../app.store'
 
 @Injectable()
 export class AuthenticationService {
@@ -19,7 +19,7 @@ export class AuthenticationService {
   }
 
   login (username: string, password: string): Observable<any> {
-    let body = {
+    const body = {
       username: username,
       password: password
     }

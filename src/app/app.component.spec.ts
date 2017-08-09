@@ -1,17 +1,17 @@
 import { APP_BASE_HREF } from '@angular/common'
 import { async, TestBed } from '@angular/core/testing'
-import { RouterModule } from '@angular/router'
 import { HttpModule } from '@angular/http'
+import { RouterModule } from '@angular/router'
 
 import { NgRedux, NgReduxModule } from '@angular-redux/store'
 import { FormsModule } from '@angular/forms'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterTestingModule } from '@angular/router/testing'
 
+import { SessionActions } from './actions/session.actions'
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
 import { LoginComponent } from './login/login.component'
-import { SessionActions } from './actions/session.actions'
 import { routes } from './routes'
 
 import { AuthenticationService } from './services/authentication.service'

@@ -1,13 +1,13 @@
 import { Action } from 'redux'
 import { SessionActions } from './../actions'
-import { ISessionState, defaultSessionState } from './../models'
+import { defaultSessionState, ISessionState } from './../models'
 
 function emptySession () {
   return Object.assign({}, defaultSessionState)
 }
 
-export function sessionReducer(state: ISessionState = defaultSessionState, action) {
-  switch(action.type) {
+export function sessionReducer (state: ISessionState = defaultSessionState, action) {
+  switch (action.type) {
     case SessionActions.LOGIN_SUCCEEDED:
       return {
         loggedIn: true,

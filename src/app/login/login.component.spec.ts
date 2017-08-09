@@ -1,7 +1,7 @@
+import { NgRedux, NgReduxModule } from '@angular-redux/store'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
-import { NgRedux, NgReduxModule } from '@angular-redux/store'
 
 import { LoginComponent } from './login.component'
 

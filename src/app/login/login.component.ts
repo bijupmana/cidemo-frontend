@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-import { AuthenticationService } from './../services/authentication.service'
+import 'rxjs/add/operator/startWith'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
-import 'rxjs/add/operator/startWith'
+import { AuthenticationService } from './../services/authentication.service'
 
 @Component({
   selector: 'app-login',
@@ -12,16 +12,16 @@ import 'rxjs/add/operator/startWith'
 export class LoginComponent implements OnInit {
   username: string
   password: string
-  hasError: boolean = false
-  error: string = ''
+  hasError = false
+  error = ''
 
-  constructor(private authService: AuthenticationService) {
+  constructor (private authService: AuthenticationService) {
   }
 
   ngOnInit () {
   }
 
-  submit(evt) {
+  submit (evt) {
     evt.preventDefault()
     this.authService.login(this.username, this.password)
                     .subscribe(this.onSuccess, this.onError)

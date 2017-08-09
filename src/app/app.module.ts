@@ -1,4 +1,4 @@
-import { NgRedux, NgReduxModule, DevToolsExtension } from '@angular-redux/store'
+import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store'
 import { NgModule } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpModule } from '@angular/http'
@@ -15,8 +15,8 @@ import { routes } from './routes'
 import { AuthenticationService } from './services/authentication.service'
 
 // State
-import { rootReducer, IAppState, INITIAL_STATE } from './app.store'
 import { SessionActions } from './actions'
+import { IAppState, INITIAL_STATE, rootReducer } from './app.store'
 
 @NgModule({
   declarations: [
@@ -41,7 +41,7 @@ import { SessionActions } from './actions'
 })
 
 export class AppModule {
-  constructor(
+  constructor (
     ngRedux: NgRedux<IAppState>,
     devTools: DevToolsExtension) {
 

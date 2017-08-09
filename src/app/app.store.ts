@@ -2,7 +2,7 @@ import { Action, combineReducers } from 'redux'
 import { SessionActions } from './actions'
 import { sessionReducer } from './reducers'
 
-import { ISessionState, defaultSessionState } from './models'
+import { defaultSessionState, ISessionState } from './models'
 
 export interface IAppState {
   session?: ISessionState
