@@ -1,28 +1,72 @@
-# CidemoApp
+# CI Demo - a JavaScript SPA Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
+This is a simple single-page-application (SPA) frontend for the [JavaScript CI Demo](https://github.com/AllianzDeutschlandAG/cidemo).
 
-## Development server
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Continuous Integration
 
-## Code scaffolding
+> Continuous Integration (CI) is a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+– [ThoughtWorks](https://www.thoughtworks.com/continuous-integration)
 
-## Build
+For the purposes of the CI Demo, the frontend is a separate git submodule so that our [Jenkins](https://github.com/AllianzDeutschlandAG/cidemo-jenkins) can individually detect and build changes here.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Our Pipeline is defined in the [`Jenkinsfile`](./Jenkinsfile), with the following critical CI steps
 
-## Running unit tests
+- **Linter**  
+  While ordered-imports might seem trivial, code consistency is one of the most accurate measures of code quality accoring to _Clean Code_ author Robert C. Martin. 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  See the [`tslint.json`](./config/tslint.json) Yes, @julie-ng hates semicolons. 
 
-## Running end-to-end tests
+- **Unit Tests**  
+  We execute the unit specs with headless Chrome, compiling our components and checking the expected functionality.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+- **Build**  
+  Although there are no "tests" here, it is important to run this step, which builds the production-ready code. In many frontends, production optimizations for example ahead-of-time compilation errors will appear here. 
 
-## Further help
+## Continuous Delivery
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+At Allianz Deutschland AG, we use [Cloudry Foundry](https://www.cloudfoundry.org/) to offer PaaS to our developers (think Heroku but for Enterprise).
+
+### Developing & Deploying Features in Parallel
+
+Frontends are often updated more often than other layers. Additionally, teams might want to develop features and deploy features in parallel for testing and QA. We can archive this with a branches workflow like so (exerpted pipeline code):
+
+```groovy
+stage('Deploy & Run E2E') {
+    steps {
+        sh "cf login …"
+
+        script {
+            // Step 1
+            def appName = isFeatureBranch()
+                        ? appNameFromManifest(append: env.BRANCH_NAME)
+                        : appNameFromManifest()
+            
+            // Step 2
+            sh "cf push ${appName}"
+
+
+            // Step 3
+            build job: '/run-e2e-tests',
+                  wait: true,
+                  parameters: [string(name: 'APP_BASE_URL', value: "https://${appName}.${params.CF_BASE_HOST}/"),
+                               string(name: 'BRANCH', value: env.BRANCH_NAME)]
+        }
+    }
+}
+```
+
+1. Determine the app name and route/url based on whether this the code change is made on a feature branch. For example changes to `feature/new-payment` might result in a http://myapp-feature-new-payment.local.pcfdev.io/ URL.
+2. Deploy this as a separate app instance - which in this example talks to existing backend layers.
+3. Run the end-to-end tests to confirm expected functionality.
+
+### Gains: Cleaner Git Workflows
+
+Challenge: a feature is not accepted but already merged into the `master` or `development` branch.
+
+Agile teams work closely together with product owners. Here there is a small feedback loop and in practice, features aren't always accepted immediately. A small design detail is overlooked. Or maybe a developer needs user feedback. 
+
+If we follow the convention above, we can deploy features independently and merge only when ready, which results in a much cleaner git workflow.
+
