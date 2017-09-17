@@ -1,7 +1,13 @@
 {
-  "name": "cidemo-app",
-  "version": "0.1.0",
+  "name": "cidemo-frontend",
+  "version": "0.3.0",
+  "author": "Julie Ng <julie.ng@allianz.de>",
   "license": "MIT",
+  "description": "AngularJS Frontend for continuous integration demo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AllianzDeutschlandAG/cidemo-frontend"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
