@@ -5,3 +5,5 @@ applications:
   memory: 64M
   target: dist
   instances: 1
+  env:
+    API_ENDPOINT: https://cidemo-mw.local.pcfdev.io
