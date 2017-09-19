@@ -10,7 +10,7 @@ import { SessionActions } from './../actions/session.actions'
 import { AuthenticationService } from './../services/authentication.service'
 
 class RouterStub {
-  navigate(url: string) { return url }
+  navigate (url: string) { return url }
 }
 
 describe('LoginComponent', () => {

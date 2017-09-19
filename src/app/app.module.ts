@@ -19,6 +19,9 @@ import { AuthenticationService } from './services/authentication.service'
 import { SessionActions } from './actions'
 import { IAppState, INITIAL_STATE, rootReducer } from './app.store'
 
+// Misc.
+import { AuthGuard } from './guards/auth.guard'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +38,7 @@ import { IAppState, INITIAL_STATE, rootReducer } from './app.store'
   ],
   providers: [
     AuthenticationService,
+    AuthGuard,
     SessionActions
   ],
   bootstrap: [

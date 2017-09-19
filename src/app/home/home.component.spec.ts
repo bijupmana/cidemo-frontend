@@ -7,7 +7,7 @@ import { AuthenticationService } from './../services/authentication.service'
 import { HomeComponent } from './home.component'
 
 class RouterStub {
-  navigate(url: string) { return url }
+  navigate (url: string) { return url }
 }
 
 describe('HomeComponent', () => {

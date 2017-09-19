@@ -27,6 +27,10 @@ export class AuthenticationService {
                     .catch(this.onError)
   }
 
+  isLoggedIn () {
+    return this.ngRedux.getState().session.loggedIn
+  }
+
   private onLogin = (response) => {
     this.ngRedux.dispatch(this.actions.loginSucceeded(response.json()))
     return response.json()
