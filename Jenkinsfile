@@ -69,6 +69,7 @@ pipeline {
                 PCF = credentials('pcf')
             }
             steps {
+                sh 'npm run configure:nginx'
                 sh "cf login -a ${params.CF_API} -u $PCF_USR -p $PCF_PSW -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
 
                 script {
