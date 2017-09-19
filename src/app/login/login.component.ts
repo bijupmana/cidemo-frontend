@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 import 'rxjs/add/operator/startWith'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
-import { AuthenticationService } from './../services/authentication.service'
+import { AuthenticationService } from './../services'
 
 @Component({
   selector: 'app-login',

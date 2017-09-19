@@ -1,9 +1,10 @@
 import { NgRedux, NgReduxModule } from '@angular-redux/store'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing'
+import { HttpModule } from '@angular/http'
 import { Router } from '@angular/router'
 
-import { SessionActions } from './../actions/session.actions'
-import { AuthenticationService } from './../services/authentication.service'
+import { HistoryActions, SessionActions } from './../actions'
+import { AccountHistoryService, AuthenticationService } from './../services'
 import { HomeComponent } from './home.component'
 
 class RouterStub {
@@ -17,8 +18,11 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
+      imports: [ HttpModule ],
       providers: [
+        AccountHistoryService,
         AuthenticationService,
+        HistoryActions,
         NgRedux,
         SessionActions,
         { provide: Router, useClass: RouterStub }

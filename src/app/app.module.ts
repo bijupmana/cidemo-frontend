@@ -13,10 +13,10 @@ import { LoginComponent } from './login/login.component'
 import { routes } from './routes'
 
 // Services
-import { AuthenticationService } from './services/authentication.service'
+import { AccountHistoryService, AuthenticationService } from './services'
 
 // State
-import { SessionActions } from './actions'
+import { HistoryActions, SessionActions } from './actions'
 import { IAppState, INITIAL_STATE, rootReducer } from './app.store'
 
 // Misc.
@@ -37,8 +37,10 @@ import { AuthGuard } from './guards/auth.guard'
     RouterModule.forRoot(routes),
   ],
   providers: [
+    AccountHistoryService,
     AuthenticationService,
     AuthGuard,
+    HistoryActions,
     SessionActions
   ],
   bootstrap: [

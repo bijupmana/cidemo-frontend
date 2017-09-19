@@ -1,5 +1,5 @@
 export interface ISessionState {
-  loggedIn: boolean,
+  loggedIn: boolean
   username: string
 }
 
