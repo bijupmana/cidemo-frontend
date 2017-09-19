@@ -19,7 +19,7 @@ export class AuthenticationService {
 
   login (username: string, password: string): Observable<any> {
     const body = {
-      username: username,
+      user: username,
       password: password
     }
     return this.http.post('/api/login', body)
