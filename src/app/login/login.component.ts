@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
+import { Router } from '@angular/router'
 import 'rxjs/add/operator/startWith'
 import { Observable } from 'rxjs/Observable'
 import { Subject } from 'rxjs/Subject'
@@ -9,16 +10,14 @@ import { AuthenticationService } from './../services/authentication.service'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   username: string
   password: string
   hasError = false
   error = ''
 
-  constructor (private authService: AuthenticationService) {
-  }
-
-  ngOnInit () {
+  constructor ( private authService: AuthenticationService,
+                private router: Router ) {
   }
 
   submit (evt) {
@@ -29,10 +28,10 @@ export class LoginComponent implements OnInit {
 
   private onSuccess = (data) => {
     this.hasError = false
+    this.router.navigate(['/home'])
   }
 
   private onError = (error) => {
-    // console.warn(error)
     this.hasError = true
     const msg = (error.status === 504) ? 'Service is currently unavailable, apologies!' : 'Error logging in'
     this.error = msg

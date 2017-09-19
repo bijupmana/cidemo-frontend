@@ -1,5 +1,6 @@
 import { NgRedux, select } from '@angular-redux/store'
 import { Component } from '@angular/core'
+import { Router } from '@angular/router'
 import { Observable } from 'rxjs/Observable'
 
 import { SessionActions } from './../actions/session.actions'
@@ -15,11 +16,13 @@ export class HomeComponent {
   @select(['session', 'fullname']) readonly fullname$: Observable<string>
 
   constructor ( private ngRedux: NgRedux<IAppState>,
-               private actions: SessionActions ) {
+                private actions: SessionActions,
+                private router: Router ) {
   }
 
   logout (evt) {
     evt.preventDefault()
     this.ngRedux.dispatch(this.actions.logout())
+    this.router.navigate(['/'])
   }
 }

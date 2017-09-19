@@ -12,7 +12,6 @@ import { IAppState } from './../app.store'
 @Injectable()
 export class AuthenticationService {
 
-
   constructor (private http: Http,
                private ngRedux: NgRedux<IAppState>,
                private actions: SessionActions) {

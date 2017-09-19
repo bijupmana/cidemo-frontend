@@ -5,8 +5,13 @@ import { HttpModule } from '@angular/http'
 
 import { LoginComponent } from './login.component'
 
+import { Router } from '@angular/router'
 import { SessionActions } from './../actions/session.actions'
 import { AuthenticationService } from './../services/authentication.service'
+
+class RouterStub {
+  navigate(url: string) { return url }
+}
 
 describe('LoginComponent', () => {
   let component: LoginComponent
@@ -16,7 +21,12 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
       imports: [ FormsModule, HttpModule ],
-      providers: [ AuthenticationService, NgRedux, SessionActions ]
+      providers: [
+        AuthenticationService,
+        NgRedux,
+        SessionActions,
+        { provide: Router, useClass: RouterStub }
+      ]
     })
     .compileComponents()
   }))

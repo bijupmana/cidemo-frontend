@@ -1,11 +1,5 @@
 <app-header></app-header>
 
 <div class="container">
-  <div *ngIf="loggedIn$ | async; else login;">
-    <app-home></app-home>
-  </div>
-
-  <ng-template #login>
-    <app-login></app-login>
-  </ng-template>
+  <router-outlet></router-outlet>
 </div>
