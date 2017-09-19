@@ -53,6 +53,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent)
     fixture.detectChanges()
     const compiled = fixture.debugElement.nativeElement
-    expect(compiled.querySelector('h1').textContent).toContain('MunichJS Demo')
+    expect(compiled.querySelector('h1').textContent).toContain('CI/CD Demo')
   }))
 })

@@ -9,6 +9,6 @@ describe('cidemo-app App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getHeaderText()).toEqual('MunichJS Demo');
+    expect(page.getHeaderText()).toEqual('CI/CD Demo');
   });
 });

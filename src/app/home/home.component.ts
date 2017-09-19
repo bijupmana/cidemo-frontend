@@ -3,10 +3,9 @@ import { Component } from '@angular/core'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs/Observable'
 
-import { AccountHistoryService } from './../services'
-import { SessionActions } from './../actions'
 import { IAppState } from './../app.store'
-import { IHistoryState, ISessionState } from './../models'
+import { IHistoryState } from './../models'
+import { AccountHistoryService } from './../services'
 
 @Component({
   selector: 'app-home',
@@ -15,10 +14,10 @@ import { IHistoryState, ISessionState } from './../models'
 })
 export class HomeComponent {
   @select(['session', 'fullname']) readonly fullname$: Observable<string>
+  @select(['history']) readonly history$: Observable<Array<IHistoryState>>
 
   constructor ( private ngRedux: NgRedux<IAppState>,
                 private historyService: AccountHistoryService,
-                private sessionActions: SessionActions,
                 private router: Router ) {
   }
 
@@ -26,11 +25,5 @@ export class HomeComponent {
     evt.preventDefault()
     console.log('addHistory')
     this.historyService.add().subscribe()
-  }
-
-  logout (evt) {
-    evt.preventDefault()
-    this.ngRedux.dispatch(this.sessionActions.logout())
-    this.router.navigate(['/'])
   }
 }

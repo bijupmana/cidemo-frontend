@@ -1,0 +1,48 @@
+table {
+  border: 0px;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+
+.history {
+  th {
+    text-align: left;
+  }
+
+  td, th {
+    padding: 0.5em 1em;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  td {
+    border-bottom: 1px solid #ccc;
+  }
+
+  .amount {
+    text-align: right;
+
+    &.is-deposit,
+    &.is-payment {
+      color: green;
+    }
+
+    &.is-invoice {
+      color: orange;
+    }
+
+    &.is-withdrawal {
+      color: red;
+
+      &:before {
+        content: '-'
+      }
+    }
+  }
+}

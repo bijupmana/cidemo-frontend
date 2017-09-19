@@ -1,5 +1,9 @@
 <header>
   <div class="container">
-    <h1>MunichJS Demo</h1>
+    <h1>CI/CD Demo</h1>
+    <div *ngIf="loggedIn$ | async" class="logged-in-user">
+      Hello {{ fullname$ | async }} |
+      <a routerLink="/logout" class="js-btn-logout" (click)="logout($event)">Logout</a>
+    </div>
   </div>
 </header>

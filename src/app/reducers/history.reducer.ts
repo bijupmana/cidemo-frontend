@@ -1,13 +1,13 @@
 import { Action } from 'redux'
 import { HistoryActions } from './../actions'
-import { IHistoryState, defaultHistoryState } from './../models'
+import { defaultHistoryState, IHistoryState } from './../models'
 
-let emptyHistory = []
+const emptyHistory = []
 
 export function historyReducer (state: Array<IHistoryState> = emptyHistory, action) {
   switch (action.type) {
     case HistoryActions.ADD_HISTORY:
-      let transaction = action.payload.accountHistory[0]
+      const transaction = action.payload.accountHistory[0]
       state.push({
         date: transaction.date,
         name: transaction.name,

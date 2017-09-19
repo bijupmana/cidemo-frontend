@@ -1,2 +1,23 @@
-<h2>Hello {{ fullname$ | async }}!</h2>
-<button type="submit" class="js-btn-logout" (click)="logout($event)">Logout</button>
+<h3>Account History</h3>
+<button class="js-btn-history" (click)="addHistory($event)">Add History</button>
+
+<p>Random transactions from<code>/api/random/history</code>:</p>
+
+<table class="history">
+  <thead>
+    <th>Name</th>
+    <th>Business</th>
+    <th>Account</th>
+    <th>Type</th>
+    <th>Amount</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of history$ | async ">
+      <td>{{ item.name }}</td>
+      <td>{{ item.business }}</td>
+      <td>{{ item.account }}</td>
+      <td>{{ item.type }}</td>
+      <td class="amount is-{{ item.type }}">{{ item.amount }}</td>
+    </tr>
+  </tbody>
+</table>

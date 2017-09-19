@@ -3,7 +3,9 @@
 header {
   background: $brand-primary;
   color: #fff;
-  text-align: center;
+
+  height: 50px;
+  line-height: 50px;
 }
 
 h1 {
@@ -12,4 +14,15 @@ h1 {
   font-weight: normal;
   font-size: 1.2rem;
   line-height: 1.4em;
+  display: inline-block;
+}
+
+.logged-in-user {
+  display: inline-block;
+  float: right;
+  font-size: 14px;
+
+  a {
+    color: white;
+  }
 }
