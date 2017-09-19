@@ -1,5 +1,9 @@
 {
   "/api/login": {
     "target": "http://localhost:3000"
+  },
+
+  "/api/random/history": {
+    "target": "http://localhost:3000"
   }
 }
