@@ -8,6 +8,7 @@ import { RouterModule, Routes } from '@angular/router'
 // Components
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
+import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { routes } from './routes'
 
@@ -22,7 +23,8 @@ import { IAppState, INITIAL_STATE, rootReducer } from './app.store'
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginComponent
+    HomeComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

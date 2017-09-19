@@ -1,10 +1,8 @@
 <app-header></app-header>
 
 <div class="container">
-  <div *ngIf="loggedIn$ | async; else login;" class="hello">
-    <h2>Hello {{ fullname$ | async }}!</h2>
-    <p><small>(random name)</small></p>
-    <button type="submit" class="js-btn-logout" (click)="logout($event)">Logout</button>
+  <div *ngIf="loggedIn$ | async; else login;">
+    <app-home></app-home>
   </div>
 
   <ng-template #login>

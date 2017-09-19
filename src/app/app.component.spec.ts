@@ -11,6 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { SessionActions } from './actions/session.actions'
 import { AppComponent } from './app.component'
 import { HeaderComponent } from './header/header.component'
+import { HomeComponent } from './home/home.component'
 import { LoginComponent } from './login/login.component'
 import { routes } from './routes'
 
@@ -22,6 +23,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         HeaderComponent,
+        HomeComponent,
         LoginComponent
       ],
       imports: [
