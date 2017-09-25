@@ -66,6 +66,7 @@ pipeline {
                                 : appNameFromManifest()
 
                     cfPush([
+                        appName: appName,
                         apiUrl: 'https://api.local.pcfdev.io',
                         org:    'pcfdev-org',
                         space:  'pcfdev-space',
