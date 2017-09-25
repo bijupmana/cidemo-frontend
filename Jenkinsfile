@@ -73,7 +73,7 @@ pipeline {
                         skipSSL: true
                     ])
 
-                    build job: '/run-e2e-tests',
+                    build job: '/downstream/run-e2e-tests',
                           wait: true,
                           parameters: [string(name: 'APP_BASE_URL', value: "https://${appName}.${params.CF_BASE_HOST}/"),
                                        string(name: 'BRANCH', value: env.BRANCH_NAME)]
