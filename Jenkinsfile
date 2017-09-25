@@ -12,21 +12,9 @@ pipeline {
     }
 
     parameters {
-        string( name: 'CF_API',
-                defaultValue: 'https://api.local.pcfdev.io',
-                description: 'Cloud Foundry API url')
-
         string( name: 'CF_BASE_HOST',
                 defaultValue: 'local.pcfdev.io',
                 description: 'Base host for CF apps')
-
-        string( name: 'CF_ORG',
-                defaultValue: 'pcfdev-org',
-                description: 'Cloud Foundry Org')
-
-        string( name: 'CF_SPACE',
-                defaultValue: 'pcfdev-space',
-                description: 'Cloud Foundry Space')
     }
 
     tools {
@@ -64,20 +52,26 @@ pipeline {
             }
         }
 
-        stage('Deploy & Run E2E') {
-            environment {
-                PCF = credentials('pcf')
-            }
+        stage('Configure Static Buildpack') {
             steps {
                 sh 'npm run configure:nginx'
-                sh "cf login -a ${params.CF_API} -u $PCF_USR -p $PCF_PSW -o ${params.CF_ORG} -s ${params.CF_SPACE}  --skip-ssl-validation"
+            }
+        }
 
+        stage('Deploy & Run E2E') {
+            steps {
                 script {
-                    def appName = isFeatureBranch()
+                    String appName = isFeatureBranch()
                                 ? appNameFromManifest(append: env.BRANCH_NAME)
                                 : appNameFromManifest()
 
-                    sh "cf push ${appName}"
+                    cfPush([
+                        apiUrl: 'https://api.local.pcfdev.io',
+                        org:    'pcfdev-org',
+                        space:  'pcfdev-space',
+                        credentialsId: 'pcf',
+                        skipSSL: true
+                    ])
 
                     build job: '/run-e2e-tests',
                           wait: true,
