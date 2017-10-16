@@ -11,11 +11,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build": "ng build --output-path dist",
     "serve:proxied": "ng serve --proxy-config ./config/proxy.conf.json",
-    "serve:docker": "ng serve --host 0.0.0.0 --port 4200 --live-reload false --proxy-config ./config/proxy.conf.json",
-    "build": "ng build",
+    "dev": "concurrently 'npm run dev:build' 'npm run dev:server'",
+    "dev:build": "ng build --watch --progress false --output-path dist",
+    "dev:server": "nodemon --watch server.js --exec 'babel-node server.js'",
     "build:prod": "ng build --aot --prod --progress false",
-    "configure:nginx": "copyfiles --flat nginx.conf dist",
     "test": "ng test",
     "test:headless": "ng test --single-run --progress false --browser ChromeHeadless",
     "test:once": "ng test --single-run --progress false",
@@ -40,6 +41,8 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
+    "express": "^4.16.2",
+    "http-proxy-middleware": "^0.17.4",
     "redux": "^3.7.2",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
@@ -51,8 +54,13 @@
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-preset-env": "^1.6.0",
     "codelyzer": "~3.0.1",
+    "concurrently": "^3.5.0",
     "copyfiles": "^1.2.0",
+    "eslint": "^4.8.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -61,11 +69,59 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "nodemon": "^1.12.1",
     "protractor": "~5.1.2",
     "semver": "^5.4.1",
     "standard-version": "^4.2.0",
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "eslint:recommended",
+    "env": {
+      "es6": true,
+      "jasmine": true,
+      "node": true
+    },
+    "globals": {
+      "context": true
+    },
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": [
+        "error",
+        {
+          "args": "none"
+        }
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ],
+      "space-before-blocks": "error",
+      "space-before-function-paren": "error",
+      "spaced-comment": [
+        "error",
+        "always",
+        {
+          "exceptions": [
+            "-",
+            "+"
+          ]
+        }
+      ],
+      "strict": "warn"
+    }
   }
 }
