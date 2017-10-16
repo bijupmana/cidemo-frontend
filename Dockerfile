@@ -8,3 +8,6 @@ COPY ["package.json", "./"]
 RUN npm install
 
 COPY [".", "./"]
+
+# build once so `dist` folder exists
+RUN npm run build
