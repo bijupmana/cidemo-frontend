@@ -48,6 +48,10 @@ pipeline {
 
         stage('Build') {
             steps {
+                // angular - always needed
+                sh 'npm run build:prod'
+
+                // just for this feature
                 sh 'npm run express:build'
             }
         }

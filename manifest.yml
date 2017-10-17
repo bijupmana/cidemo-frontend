@@ -2,7 +2,7 @@
 applications:
 - name: cidemo-frontend
   buildpack: nodejs_buildpack
-  command: npm express:start
+  command: npm run express:start
   memory: 64M
   instances: 1
   health-check-type: http

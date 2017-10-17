@@ -16,7 +16,10 @@ web.use('/api*', proxy({
 
 // Assume everything else is an angular path
 web.get('*', function(req, res) {
-  res.sendfile(__dirname + '/dist/index.html')
+  let indexHtml = process.env.NODE_ENV == 'production'
+                  ? 'index.html'
+                  : __dirname + '/dist/index.html'
+  res.sendfile(indexHtml)
 })
 
 // Listen
