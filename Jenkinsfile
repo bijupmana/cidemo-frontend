@@ -54,8 +54,6 @@ pipeline {
 
         stage('Deploy & Run E2E') {
             steps {
-                sh 'npm run configure:nginx'
-
                 script {
                     String appName = isFeatureBranch()
                                 ? appNameFromManifest(append: env.BRANCH_NAME)
