@@ -53,6 +53,11 @@ pipeline {
         }
 
         stage('Deploy & Run E2E') {
+            when {
+                expression {
+                    return isFeatureBranch() || env.BRANCH_NAME == 'master'
+                }
+            }
             steps {
                 script {
                     String appName = isFeatureBranch()
