@@ -9,8 +9,9 @@
     "url": "https://github.com/AllianzDeutschlandAG/cidemo-frontend"
   },
   "scripts": {
+    "start": "node dist/app.js",
     "ng": "ng",
-    "start": "ng serve",
+    "serve": "ng serve",
     "build": "ng build --output-path dist",
     "serve:proxied": "ng serve --proxy-config ./config/proxy.conf.json",
     "dev": "concurrently 'npm run dev:build' 'npm run dev:server'",
