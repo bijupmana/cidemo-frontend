@@ -2,6 +2,7 @@ import express from 'express'
 import proxy from 'http-proxy-middleware'
 
 const PORT = process.env.PORT || 3000
+const MIDDLEWARE_ENDPOINT = process.env.MIDDLEWARE_ENDPOINT || 'http://middleware/'
 
 let web = express()
 
@@ -10,7 +11,7 @@ web.use(express.static('dist'))
 
 // Proxy APIs to Middleware server
 web.use('/api*', proxy({
-  target: 'http://middleware:3000'
+  target: MIDDLEWARE_ENDPOINT
 }))
 
 // Assume everything else is an angular path

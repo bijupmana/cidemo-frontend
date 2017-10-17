@@ -1,9 +1,10 @@
 ---
 applications:
 - name: cidemo-frontend
-  buildpack: staticfile_buildpack
+  command: npm start
   memory: 64M
-  target: dist
   instances: 1
+  health-check-type: http
+  health-check-http-endpoint: /
   env:
-    API_ENDPOINT: https://cidemo-mw.local.pcfdev.io
+    MIDDLEWARE_ENDPOINT: http://cidemo-middleware.local.pcfdev.io
