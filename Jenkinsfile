@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-@Library('demo-pipeline-library') _
+@Library('demo-pipeline-library@feature/cf-helper') _
 
 pipeline {
     agent any
@@ -72,6 +72,19 @@ pipeline {
                         credentialsId: 'pcf',
                         skipSSL: true
                     ])
+
+
+                    if (isFeatureBranch()) {
+                        String middlewareAppName = appName.replaceAll('cidemo-frontend', 'cidemo-middleware')
+                        String middlewareUrl = "http://${middlewareAppName}.local.pcfdev.io"
+                        withCf([
+                            apiUrl: 'https://api.local.pcfdev.io',
+                            org:    'pcfdev-org',
+                            space:  'pcfdev-space',
+                        ]) {
+                            sh "cf set-env $appName MIDDLEWARE_ENDPOINT $middlewareUrl"
+                        }
+                    }
 
                     build job: '/downstream/run-e2e-tests',
                           wait: true,
