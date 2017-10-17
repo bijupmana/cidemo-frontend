@@ -9,7 +9,8 @@
     "url": "https://github.com/AllianzDeutschlandAG/cidemo-frontend"
   },
   "scripts": {
-    "start": "node dist/app.js",
+    "express:start": "node dist/server.js",
+    "express:build": "babel server.js --out-dir dist",
     "ng": "ng",
     "serve": "ng serve",
     "build": "ng build --output-path dist",
