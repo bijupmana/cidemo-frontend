@@ -1,6 +1,7 @@
 ---
 applications:
 - name: cidemo-frontend
+  buildpack: nodejs_buildpack
   command: npm start
   memory: 64M
   instances: 1
